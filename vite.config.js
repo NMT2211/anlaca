@@ -4,10 +4,10 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
-  base: '/Project_KiNangLamViec/', // Đường dẫn cơ sở là tên repository của bạn trên GitHub
+  base: '/Project_KiNangLamViec/',
   plugins: [
     vue(),
-    vueDevTools(),
+    ...(process.env.NODE_ENV === 'development' ? [vueDevTools()] : []),
   ],
   resolve: {
     alias: {
@@ -17,8 +17,23 @@ export default defineConfig({
     },
   },
   server: {
+    host: true, // Cho phép truy cập qua địa chỉ IP
     port: 5173,
     open: true,
     cors: true,
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
   },
 });
