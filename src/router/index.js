@@ -16,7 +16,7 @@ import report from "../components/admin/report.vue";
 const routes = [
   // Routes dành cho user
   {
-    path: "/Project_KiNangLamViec/",
+    path: "/",
     name: "listQuanAn",
     component: listQuanAn,
      // Yêu cầu đăng nhập
