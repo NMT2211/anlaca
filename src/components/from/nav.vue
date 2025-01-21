@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
       <!-- Logo -->
-      <router-link to="/" class="navbar-brand" @click.native="reloadPage">
+      <router-link to="/Project_KiNangLamViec/" class="navbar-brand" @click.native="reloadPage">
         <img alt="Logo" :src="logoPath" />
       </router-link>
 

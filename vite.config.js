@@ -4,6 +4,7 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
+  base: '/Project_KiNangLamViec/', // Đường dẫn cơ sở là tên repository của bạn trên GitHub
   plugins: [
     vue(),
     vueDevTools(),
