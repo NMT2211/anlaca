@@ -80,11 +80,7 @@ const routes = [
     component: report,
     meta: { requiresAuth: true, isAdmin: true }, // Chỉ dành cho admin
   },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: () => import("../components/errors/NotFound.vue"), // Tạo component NotFound.vue
-  },
+  
   
 ];
 
