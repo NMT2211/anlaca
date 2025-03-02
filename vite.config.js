@@ -4,7 +4,7 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
-  base: '/anlaca/',  // Thay đổi từ '/Project_KiNangLamViec/' thành '/anlaca/'
+  base: '/',  // Thay đổi từ '/Project_KiNangLamViec/' thành '/anlaca/'
   plugins: [
     vue(),
     ...(process.env.NODE_ENV === 'development' ? [vueDevTools()] : []),

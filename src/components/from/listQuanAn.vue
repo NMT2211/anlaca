@@ -170,7 +170,7 @@ export default {
       }).format(value);
     },
     getImageUrl(imageName) {
-      return `/anlaca/img/${imageName}`; // Đường dẫn ảnh tĩnh
+      return `/img/${imageName}`; // Đường dẫn ảnh tĩnh
     }
   },
   mounted() {

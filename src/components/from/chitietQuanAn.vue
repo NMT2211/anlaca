@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     getImageUrl(imageName) {
-      return `/anlaca/img/${imageName}`;
+      return `/img/${imageName}`;
     },
     fetchQuanAn() {
       this.isLoading = true;
