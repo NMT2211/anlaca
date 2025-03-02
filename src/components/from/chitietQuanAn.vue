@@ -1,65 +1,90 @@
 <template>
-  <div>
+  <div class="container mt-5">
     <!-- Loader -->
-    <div v-if="isLoading" id="loader" class="text-center my-5">
+    <div v-if="isLoading" class="text-center my-5">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Đang tải...</span>
       </div>
     </div>
 
     <!-- Nội dung quán ăn -->
-    <div v-else>
-      <div class="row mt-5">
-        <!-- Thông tin quán ăn -->
-        <div class="col-md-9 mb-5">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ quanAn.name }}</h5>
-              <p class="card-text">Địa chỉ: {{ quanAn.address }}</p>
-              <p class="card-text">Google Map Link: 
-                  <a 
-                    :href="quanAn.googleMapLink" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="text-primary"
-                  >
-                    Xem trên Google Maps
-                  </a>
-                </p>
-
-              <p class="card-text">Tỉnh/Thành phố: {{ quanAn.province }}</p>
-              <p class="card-text">Loại quán: {{ quanAn.type }}</p>
-              <p class="card-text">Giá trung bình: {{ quanAn.averagePrice }} VND</p>
-              <p class="card-text">Đánh giá: {{ quanAn.rating }} ⭐</p>
-              <p class="card-text">Mô tả: {{ quanAn.description }}</p>
-              <button class="btn btn-outline-success me-2" @click="likeQuanAn">
-                <i class="fas fa-thumbs-up"></i> Thích
-              </button>
-              <button class="btn btn-outline-info" @click="shareQuanAn">
-                <i class="fas fa-share"></i> Chia sẻ
-              </button>
+    <div v-else class="row">
+      <!-- Ảnh quán ăn -->
+      <div class="col-md-7 mb-6">
+        <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div v-for="(image, index) in quanAn.images" :key="index" :class="['carousel-item', { active: index === 0 }]">
+              <img :src="getImageUrl(image)" class="d-block w-100 rounded" alt="Ảnh quán ăn" />
             </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
         </div>
+      </div>
 
-        <!-- Quán ăn liên quan -->
-        <div class="col-md-3 mb-5">
-          <h5 class="mb-3">Quán ăn liên quan</h5>
-          <div
-            v-for="relatedQuanAn in relatedQuanAns"
-            :key="relatedQuanAn.id"
-            class="card card1 shadow-sm mb-3"
-          >
-            <div class="card-body">
-              <h6 class="card-title">{{ relatedQuanAn.name }}</h6>
-              <p class="card-text">Địa chỉ: {{ relatedQuanAn.address }}</p>
-              <button
-                class="btn btn-outline-primary btn-sm"
-                @click="goToQuanAn(relatedQuanAn.id)"
-              >
-                Xem ngay
-              </button>
-            </div>
+      <!-- Thông tin quán ăn -->
+      <div class="col-md-5 mb-5">
+        <div class="card shadow-sm p-4">
+          <h2 class="text-primary"><i class="fas fa-store"></i> {{ quanAn.name }}</h2>
+          <p><i class="fas fa-map-marker-alt"></i> {{ quanAn.address }}</p>
+          <p><i class="fas fa-city"></i> {{ quanAn.province }}</p>
+          <p><i class="fas fa-utensils"></i> {{ quanAn.type }}</p>
+          <p><i class="fas fa-phone"></i> {{ quanAn.phone }}</p>
+          <p><i class="fas fa-clock"></i> {{ quanAn.openingHours }}</p>
+          <p class="text-success fw-bold"><i class="fas fa-dollar-sign"></i> {{ formatCurrency(quanAn.averagePrice) }}</p>
+          <p class="text-warning"><i class="fas fa-star"></i> {{ quanAn.rating }} ⭐</p>
+          <p class="text-muted"><i class="fas fa-info-circle"></i> {{ quanAn.description }}</p>
+
+          <div class="mt-3">
+            <button @click="toggleLike" class="btn" :class="liked ? 'btn-success' : 'btn-outline-success'">
+              <i class="fas fa-thumbs-up"></i> {{ liked ? 'Đã thích' : 'Thích' }}
+            </button>
+            <button @click="shareQuanAn" class="btn btn-outline-info">
+              <i class="fas fa-share"></i> Chia sẻ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bình luận -->
+    <div class="mt-5">
+      <h3 class="text-primary"><i class="fas fa-comments"></i> Bình luận</h3>
+
+      <!-- Form bình luận -->
+      <div v-if="user" class="mb-4">
+        <textarea v-model="newComment" class="form-control" rows="3" placeholder="Nhập bình luận..."></textarea>
+        <button @click="submitComment" class="btn btn-primary mt-2"><i class="fas fa-paper-plane"></i> Gửi</button>
+      </div>
+      <p v-else class="text-muted">Bạn cần <a href="#" @click="showLogin">đăng nhập</a> để bình luận.</p>
+
+      <!-- Danh sách bình luận -->
+      <div v-if="comments.length">
+        <div v-for="comment in comments" :key="comment.id" class="card mb-2 p-3">
+          <p><strong>{{ comment.user }}</strong> - {{ comment.date }}</p>
+          <p>{{ comment.text }}</p>
+        </div>
+      </div>
+      <p v-else class="text-muted">Chưa có bình luận nào.</p>
+    </div>
+
+    <!-- Đăng nhập / Đăng ký -->
+    <div v-if="showLoginModal" class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Đăng nhập</h5>
+            <button type="button" class="btn-close" @click="closeLogin"></button>
+          </div>
+          <div class="modal-body">
+            <input v-model="username" class="form-control mb-2" placeholder="Tên đăng nhập">
+            <input v-model="password" type="password" class="form-control mb-2" placeholder="Mật khẩu">
+            <button @click="login" class="btn btn-primary w-100">Đăng nhập</button>
+            <p class="text-center mt-2">Chưa có tài khoản? <a href="#" @click="register">Đăng ký</a></p>
           </div>
         </div>
       </div>
@@ -68,95 +93,95 @@
 </template>
 
 <script>
-import axios from "axios";
+import data from "@/data.js"; // Import dữ liệu từ data.js
 
 export default {
   data() {
     return {
-      quanAn: {}, // Thông tin quán ăn hiện tại
-      relatedQuanAns: [], // Danh sách quán ăn liên quan
-      isLoading: false, // Trạng thái tải dữ liệu
+      quanAn: {},
+      comments: [],
+      newComment: "",
+      liked: false,
+      isLoading: false,
+      user: null,
+      showLoginModal: false,
+      username: "",
+      password: ""
     };
   },
   methods: {
-    // Gọi API để lấy thông tin quán ăn hiện tại
-    async fetchQuanAn() {
+    getImageUrl(imageName) {
+      return `/anlaca/img/${imageName}`;
+    },
+    fetchQuanAn() {
       this.isLoading = true;
-      try {
-        const id = this.$route.params.id;
-        if (!id) {
-          alert("Không tìm thấy quán ăn.");
-          this.$router.push("/");
-          return;
-        }
-        const response = await axios.get(
-          `http://localhost:8080/ASM_KiNangLamViec/listQuanAn_api/${id}`
-        );
-        if (response.status === 200) {
-          this.quanAn = response.data;
-          this.fetchRelatedQuanAns(); // Lấy quán ăn liên quan sau khi tải xong quán ăn chính
-        } else {
-          alert("Không thể tải chi tiết quán ăn.");
-          this.$router.push("/");
-        }
-      } catch (error) {
-        console.error("Lỗi khi gọi API:", error);
-        alert("Không thể tải quán ăn. Vui lòng thử lại sau.");
-        this.$router.push("/");
-      } finally {
-        this.isLoading = false;
-      }
+      const id = parseInt(this.$route.params.id);
+      this.quanAn = data.danhSachQuanAn.find((item) => item.id === id) || {};
+      this.comments = data.comments.filter(comment => comment.quanAnId === id);
+      this.isLoading = false;
     },
-
-    // Gọi API để lấy danh sách quán ăn liên quan
-    async fetchRelatedQuanAns() {
-      try {
-        const response = await axios.get("http://localhost:8080/ASM_KiNangLamViec/listQuanAn_api");
-        if (response.status === 200) {
-          this.relatedQuanAns = response.data.filter(
-            (item) => item.province === this.quanAn.province && item.id !== this.quanAn.id
-          );
-        } else {
-          console.warn("Không thể tải danh sách quán ăn liên quan.");
-        }
-      } catch (error) {
-        console.error("Lỗi khi gọi API quán ăn liên quan:", error);
-      }
+    submitComment() {
+      if (!this.newComment.trim()) return;
+      const newCommentObj = {
+        id: Date.now(),
+        quanAnId: this.quanAn.id,
+        user: this.user,
+        text: this.newComment,
+        date: new Date().toLocaleString()
+      };
+      this.comments.push(newCommentObj);
+      data.comments.push(newCommentObj); // Save to data.js
+      this.newComment = "";
     },
-
-    // Chuyển đến quán ăn khác
-    goToQuanAn(id) {
-      this.$router.push({ name: "QuanAnDetails", params: { id } }).then(() => {
-        window.location.reload(); // Tải lại trang sau khi điều hướng thành công
-      });
+    toggleLike() {
+      this.liked = !this.liked;
     },
-
-    // Like quán ăn
-    likeQuanAn() {
-      alert("Bạn đã thích quán ăn này!");
-    },
-
-    // Chia sẻ quán ăn
     shareQuanAn() {
-      alert("Link chia sẻ quán ăn đã được sao chép!");
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link đã được sao chép!");
     },
+    showLogin() {
+      this.showLoginModal = true;
+    },
+    closeLogin() {
+      this.showLoginModal = false;
+    },
+    login() {
+      if (this.username && this.password) {
+        this.user = this.username;
+        alert("Đăng nhập thành công!");
+        this.closeLogin();
+      } else {
+        alert("Vui lòng nhập thông tin!");
+      }
+    },
+    register() {
+      alert("Chức năng đăng ký đang được phát triển!");
+    },
+    formatCurrency(value) {
+      return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
+    }
   },
   mounted() {
-    this.fetchQuanAn(); // Gọi API khi component được mount
-  },
+    this.fetchQuanAn();
+  }
 };
 </script>
 
 <style scoped>
-.ratio {
-  width: 100%;
-  border-radius: 10px;
+.carousel img {
+  height: 400px;
+  object-fit: cover;
 }
-.card1 {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
-.card1:hover {
+.card:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.modal {
+  background: rgba(0, 0, 0, 0.5);
 }
 </style>

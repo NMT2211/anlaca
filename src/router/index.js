@@ -94,7 +94,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const user = JSON.parse(sessionStorage.getItem("user")); // Lấy thông tin người dùng từ localStorage
   const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true"; // Kiểm tra trạng thái đăng nhập
-  const isAdmin = user?.isAdmin // Kiểm tra người dùng có phải admin
+  const isAdmin = user?.isAdmin; // Kiểm tra người dùng có phải admin
   console.log(isAdmin);
 
 
