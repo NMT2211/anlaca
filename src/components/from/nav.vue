@@ -98,7 +98,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import logoPath from "@/assets/img/logo2.png";
+import logoPath from "@/assets/img/logo.png";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -144,7 +144,7 @@ const getUserGreeting = () => {
   border-bottom: 2px solid #ffa000; /* Đường viền nhấn */
 }
 .navbar-brand img {
-  height: 50px;
+  height: 80px;
   width: auto;
   transition: transform 0.3s ease;
 }
