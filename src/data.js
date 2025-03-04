@@ -30,7 +30,7 @@ const danhGia = [
         "pho-thin-3.jpg"
       ],
       address: "13 Lò Đúc, Hà Nội",
-      googleMapLink: "https://goo.gl/maps/abc123",
+      googleMapLink: "https://maps.app.goo.gl/gYqUtcgaYqbVvtCf7",
       province: "Thành phố Hà Nội",
       phone: "0243821234",
       name: "Phở Thìn",
@@ -48,7 +48,7 @@ const danhGia = [
         "bun-cha-huong-lien-3.jpg"
       ],
       address: "24 Lê Văn Hưu, Hà Nội",
-      googleMapLink: "https://goo.gl/maps/xyz456",
+      googleMapLink: "https://maps.app.goo.gl/wdMJZ6P4PkfRSFCs8",
       province: "Thành phố Hà Nội",
       phone: "02439428588",
       name: "Bún Chả Hương Liên",
@@ -66,7 +66,7 @@ const danhGia = [
         "highlands-coffee-3.jpg"
       ],
       address: "15 Ngô Quyền, Hà Nội",
-      googleMapLink: "https://goo.gl/maps/def789",
+      googleMapLink: "https://maps.app.goo.gl/v45kRCeQez3XSphT7",
       province: "Thành phố Hà Nội",
       phone: "02466778899",
       name: "Highlands Coffee",
@@ -84,7 +84,7 @@ const danhGia = [
         "pizza-4p-3.jpg"
       ],
       address: "8/15 Lê Thánh Tôn, Quận 1, TP. Hồ Chí Minh",
-      googleMapLink: "https://goo.gl/maps/ghi101112",
+      googleMapLink: "https://maps.app.goo.gl/aLB4tTEef1ofoVBQ9",
       province: "Thành phố Hồ Chí Minh",
       phone: "02836221144",
       name: "Pizza 4P",
@@ -102,7 +102,7 @@ const danhGia = [
         "hu-tieu-my-tho-3.jpg"
       ],
       address: "72 Lê Thị Hồng Gấm, TP. Mỹ Tho, Tiền Giang",
-      googleMapLink: "https://goo.gl/maps/jkl131415",
+      googleMapLink: "https://maps.app.goo.gl/pcYyZDerpyzQWFjM7",
       province: "Tỉnh Tiền Giang",
       phone: "02733888999",
       name: "Hủ Tiếu Mỹ Tho",
@@ -120,7 +120,7 @@ const danhGia = [
         "quan-an-ngon-3.jpg"
       ],
       address: "18 Phan Bội Châu, Hà Nội",
-      googleMapLink: "https://goo.gl/maps/mno161718",
+      googleMapLink: "https://maps.app.goo.gl/6XL5ac8MK2pQwbh67",
       province: "Thành phố Hà Nội",
       phone: "02439425388",
       name: "Quán Ăn Ngon",
@@ -138,7 +138,7 @@ const danhGia = [
         "com-tam-ba-ghien-3.jpg"
       ],
       address: "84 Đặng Văn Ngữ, Quận Phú Nhuận, TP. Hồ Chí Minh",
-      googleMapLink: "https://goo.gl/maps/pqr192021",
+      googleMapLink: "https://maps.app.goo.gl/t5jAvGk8JZ3wAWcYA",
       province: "Thành phố Hồ Chí Minh",
       phone: "02835122334",
       name: "Cơm Tấm Ba Ghiền",
@@ -156,7 +156,7 @@ const danhGia = [
         "kichi-kichi-3.jpg"
       ],
       address: "Vincom Đồng Khởi, TP. Hồ Chí Minh",
-      googleMapLink: "https://goo.gl/maps/stu222324",
+      googleMapLink: "https://maps.app.goo.gl/FCowBzAY6v3Zumcs7",
       province: "Thành phố Hồ Chí Minh",
       phone: "02839112244",
       name: "Lẩu Băng Chuyền Kichi Kichi",
@@ -174,7 +174,7 @@ const danhGia = [
         "bun-bo-hue-o-xuan-3.jpg"
       ],
       address: "17 Lý Tự Trọng, TP. Huế",
-      googleMapLink: "https://goo.gl/maps/vwx252627",
+      googleMapLink: "https://maps.app.goo.gl/crBpRccKVyq2rMa18",
       province: "Thành phố Huế",
       phone: "02343888222",
       name: "Bún Bò Huế O Xuân",
